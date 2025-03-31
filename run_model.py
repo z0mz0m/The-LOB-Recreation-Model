@@ -36,7 +36,7 @@ def define_args():
     parser.add_argument('--ES', type=bool, default=True, help="whether to use market events simulator or not")
     return parser.parse_args()
 
-def main(dataset='MSFT',side='bid',main_module='ode',HC=False,seed=0,gpu=0):
+def main(dataset='MSFT',side='ask',main_module='ode',HC=False,seed=0,gpu=0):
 
     args = define_args()
     args.dataset = dataset
@@ -55,9 +55,9 @@ def main(dataset='MSFT',side='bid',main_module='ode',HC=False,seed=0,gpu=0):
     log_path = "./logs/{}_{}_{}_{}_{}_{}_ex.log".format(args.dataset,args.side,args.main_module,args.seed,args.ES,args.HC)
     logger = open(log_path, "w")
 
-    record_list_train = torch.load('./parsed_data_/data_%s_%s_ws005_train_3days_1interval_timezscore_together_4exactlabel_explicit_100_%d_new.pt' %(args.side,args.dataset,args.validate))
-    record_list_val = torch.load('./parsed_data_/data_%s_%s_ws005_val_1day_1interval_timezscore_together_4exactlabel_explicit_100_%d_new.pt' % (args.side, args.dataset,args.validate))
-    record_list_test = torch.load('./parsed_data_/data_%s_%s_ws005_test_1day_1interval_timezscore_together_4exactlabel_explicit_100_new.pt' %(args.side,args.dataset))
+    record_list_train = torch.load('./parsed_data_/data_ask_MSFT_ws005_train_3days_1interval_timezscore_together_4exactlabel_sparse_100_3_new.pt')
+    record_list_val = torch.load('./parsed_data_/data_ask_MSFT_ws005_val_1day_1interval_timezscore_together_4exactlabel_sparse_100_3_new.pt')
+    record_list_test = torch.load('./parsed_data_/data_ask_MSFT_ws005_test_1day_1interval_timezscore_together_4exactlabel_sparse_100_new.pt')
     data_obj = utils.parse_datasets(device,batch_size=args.bs,dataset_train = record_list_train, dataset_val = record_list_val, dataset_test = record_list_test, train_mode = True)
     input_dim = data_obj["input_dim"]
     num_batches = data_obj["n_train_batches"]
